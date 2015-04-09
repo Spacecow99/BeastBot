@@ -10,8 +10,8 @@ class RubyModule
     puts "channel:" + text
   end
 
-  def send_to_user(text)
-    puts "user:" + text
+  def send_to_user(user, text)
+    puts user + ":" + text
   end
   
 end
