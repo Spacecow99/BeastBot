@@ -78,6 +78,9 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# Beastbot config
+src/conf/beastbot.conf
+
 # Windows
 # =========================
 

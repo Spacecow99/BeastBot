@@ -1,4 +1,4 @@
 #!/usr/bin/ruby
 
-print "Oh yeah this is the second script"
+print "channel:Oh yeah this is the second script"
 
