@@ -1,0 +1,3 @@
+SET CHANNEL DEL command
+Deletes a channel from the bot's default join list
+Parameters: !set channel del *channel*

@@ -1,0 +1,3 @@
+SET ADMIN DEL command
+Deletes a nick out of the bot's default admin list
+Parameters: !set admin del *nick*

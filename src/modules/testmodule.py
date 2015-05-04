@@ -2,6 +2,7 @@ import ConfigParser
 import ircFunc
 import errorhandling
 
+
 def init():
     config = ConfigParser.ConfigParser()
     config.read('conf/beastbot.conf')

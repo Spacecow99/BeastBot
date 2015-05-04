@@ -1,0 +1,3 @@
+SET BOTBAN ADD command
+Adds a nick to the lists of users banned from the bot
+Parameters: !set botban add *nick*

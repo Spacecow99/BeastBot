@@ -1,0 +1,3 @@
+SET ADMIN ADD command
+This command will add a nick to the bot's default admin list.
+Parameters: !set admin add *nick*

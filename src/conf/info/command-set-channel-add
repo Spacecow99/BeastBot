@@ -1,0 +1,3 @@
+SET CHANNEL ADD command
+Adds a channel to the bot's default join list
+Parameters: !set channel add *channel*

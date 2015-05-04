@@ -3,6 +3,7 @@ import time
 import sys
 import traceback
 
+
 def init():
     config = ConfigParser.ConfigParser()
     config.read('conf/beastbot.conf')
@@ -12,6 +13,7 @@ def init():
         config.write(configfile)
 
 init()
+
 
 def errorinfo():
     info = traceback.extract_tb(sys.exc_info()[-1])
@@ -26,36 +28,39 @@ def errorinfo():
     var['linetext'] = info[3]
     return var
 
-def log(level, message, info, additional = None):
+
+def log(level, message, info, additional=None):
     try:
         additional = additional.strip('\n').strip('\r')
     except Exception:
         pass
-    date = time.strftime("%d-%m-%Y")
+    date = time.strftime("%Y-%m-%d") # this is the global standard
     file = open('log/%s.log' % (date), 'a')
     log = level
-    log = log+' - '+time.strftime("%H:%M:%S")
-    log = log+' - '+message
-    log = log+' - Filename: '+info['filename']
-    log = log+' - Line Number: '+info['linenumber']
-    log = log+' - Function: '+info['functionname']
-    log = log+' - Line Text: '+info['linetext']
+    log = log + ' - ' + time.strftime("%H:%M:%S")
+    log = log + ' - ' + message
+    log = log + ' - Filename: ' + info['filename']
+    log = log + ' - Line Number: ' + info['linenumber']
+    log = log + ' - Function: ' + info['functionname']
+    log = log + ' - Line Text: ' + info['linetext']
     if additional:
-        log = log+' - Additional Information: '+additional
-    file.write(log+"\n")
+        log = log + ' - Additional Information: ' + additional
+    file.write(log + "\n")
     file.close()
 
-def errorlog(option, message, additional = None):
+
+def errorlog(option, message, additional=None):
     info = errorinfo()
     message = str(message)
     option = option.upper()
     log(option, message, info, additional)
-    
+
+
 def loginfo(info):
     info = str(info)
-    date = time.strftime("%d-%m-%Y")
-    time = time.strftime("%H:%M:%S")
-    file = open("log/%s.log" %(date), 'a')
-    output = time+" - "+info
-    file.write(output+"\n")
+    date = time.strftime("%Y-%m-%d") # this is the global standard
+    logtime = time.strftime("%H:%M:%S")
+    file = open("log/%s.log" % (date), 'a')
+    output = logtime + " - " + info
+    file.write(output + "\n")
     file.close()

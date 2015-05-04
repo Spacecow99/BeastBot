@@ -1,10 +1,12 @@
 import ConfigParser
-import ircFunc, mainFunc
+import ircFunc
+import mainFunc
 import urllib
 import urllib2
 import errorhandling
 import string
 import re
+
 
 def init():
     config = ConfigParser.ConfigParser()
@@ -17,6 +19,7 @@ def init():
 
 init()
 
+
 def urlparse(line, irc):
     message, username, msgto = ircFunc.ircMessage(line)
     try:
@@ -27,7 +30,8 @@ def urlparse(line, irc):
         titletest = html.find('<title>')
         titletest2 = html[titletest:]
         titletest2 = titletest2[0:7]
-        if titletest2 == '<title>': good = True
+        if titletest2 == '<title>':
+            good = True
         end = html.find('</title>', start)
         title = html[start:end]
         title = title.strip()
@@ -35,7 +39,7 @@ def urlparse(line, irc):
             title = title.strip()
             title = filter(lambda x: x in string.printable, title)
             title = title[0:100]
-            output = "Title: ["+title+"]"
+            output = "Title: [ " + title + " ]"
             ircFunc.ircSay(msgto, output, irc)
     except IndexError as e:
         errorhandling.errorlog('information', e, line)

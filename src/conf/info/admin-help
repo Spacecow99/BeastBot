@@ -1,0 +1,4 @@
+ADMIN COMMANDS
+--------------
+Commands: set, nick, join, part, announce, bot-restart, bot-update, bot-pull, bot-reload, bot-quit
+Use !help *command* for more information on a command

@@ -1,0 +1,3 @@
+SET NICK command
+Sets the bot's default nick
+Parameters: !set nick *newNick*

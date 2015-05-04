@@ -11,6 +11,7 @@ __pycache__/
 conf/
 *beastbot.conf*
 __init.py__
+log/*.log
 
 # Distribution / packaging
 .Python
