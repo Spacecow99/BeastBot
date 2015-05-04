@@ -14,7 +14,7 @@ end
 
 sides = Beastbot::Interpret::get_arguments
 
-if sides.nil?
+if sides.to_i > 0
   val = throw(sides.to_i)
   Beastbot::Talk::send_to_channel("Throws " + val)
   Beastbot::Talk::send_to_user("Throws " + val)
