@@ -46,7 +46,7 @@ def urban(line, irc):
                 info = urllib.urlopen(url)
                 try:
                     data = json.loads(info.read())
-                    definition = data['list'][0]['definition']
+                    definition = data['list'][0]['definition'].replace("\n", " ").replace("\r", "")
                     thumbsup = data['list'][0]['thumbs_up']
                     thumbsdown = data['list'][0]['thumbs_down']
                     thumbsdown = str(thumbsdown)
