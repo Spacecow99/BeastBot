@@ -1,4 +1,0 @@
-* For kulver: slap module
-
-* Fix EOLError from multiprocessing when running on windows without cygwin
-* Make seen module
