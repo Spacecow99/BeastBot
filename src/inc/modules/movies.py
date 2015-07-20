@@ -9,7 +9,7 @@ import json
 import urllib
 from inc import *
 
-modFunc.addCommand('movie', 'movie', 'movie')
+modFunc.addCommand('movie', 'movies', 'movies')
 
 def getMovieInfo(title):
     titlesplit = title.lower().strip().split() #oh may lol
@@ -31,7 +31,7 @@ def getMovieInfo(title):
     else:
         return (False, "Movie: %s not found, check spelling?" % title)
     
-def movie(line, irc):
+def movies(line, irc):
     splitline = line.split(" :")
     message, whole, username, msgto = ircFunc.ircMessage(line.strip(), whl=True)
     movie_title = whole.strip()
