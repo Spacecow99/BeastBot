@@ -10,6 +10,7 @@ modFunc.addCommand('http', 'urlparsing', 'urlparse')
 def urlparse(line, irc):
     message, username, msgto = ircFunc.ircMessage(line)
     message[0] = message[0].replace("!http", "http")
+    good = False
     try:
         sock = urllib2.urlopen(message[0], timeout=4)
         html = sock.read()

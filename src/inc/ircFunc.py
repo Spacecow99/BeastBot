@@ -5,6 +5,7 @@ import configFunc
 import time
 from multiprocessing import Process, Manager
 import socket
+import sqlite3
 
 def ircMode(chan, args, irc):
     irc.send("MODE %s %s\r\n" % (chan, args))
@@ -40,7 +41,92 @@ def ircNick(newnick, irc):
     configFunc.setBotConf('tempnickname', newnick)
 
 
+def ensureRegDB():
+	import os
+	if not os.path.isfile('conf/reg.db'):
+		con = sqlite3.connect('conf/reg.db')
+		while con:
+			cur = con.cursor()
+			cur.execute('''CREATE TABLE entries
+				(nick TEXT,
+				status TEXT,
+				rec TEXT);''')
+			con.commit()
+			break
+
+def regStatus(nick):
+	nick = nick.lower()
+	con = sqlite3.connect('conf/reg.db')
+	while con:
+		cur = con.cursor()
+		cur.execute("SELECT * FROM entries WHERE nick='%s'" % nick)
+		row = cur.fetchone()
+		break
+	if row == None:
+		return "ERROR"
+	else:
+		status = row[1]
+		if status == 'None':
+			return None
+		else:
+			return status
+
+def updateReg(nick, state):
+	nick = nick.lower()
+	con = sqlite3.connect('conf/reg.db')
+	while con:
+		cur = con.cursor()
+		cur.execute("UPDATE entries SET status='%s' WHERE nick='%s'" % (state, nick))
+		con.commit()
+		break
+	return True
+
+def regSetRec(nick, state):
+	nick = nick.lower()
+	con = sqlite3.connect('conf/reg.db')
+	try:
+		while con:
+			cur = con.cursor()
+			cur.execute("DELETE FROM entries WHERE nick='%s'" % nick)
+			con.commit()
+			break
+	except IndexError:
+		pass
+	if state:
+		while con:
+			cur = con.cursor()
+			cur.execute("INSERT INTO entries (nick, status, rec) VALUES ('%s', 'None', 'True')" % nick)
+			con.commit()
+			break
+	return True
+
+
 def isRegged(nick, irc, sentline=False):
+	nick = nick.lower()
+	regSetRec(nick, True)
+	start = True
+	a = 0
+	while start:
+		a = a + 1
+		if a > 3:
+			return False
+		i = 0
+		ircSay("NickServ", "STATUS %s " % (nick,), irc)
+		while i < 10:
+			regstatus = regStatus(nick)
+			if regstatus != None:
+				if regstatus == "ERROR":
+					print 'something failed with a error getting the regstatus'
+				if regstatus.lower() == 'true':
+					return True
+				else:
+					return False
+			i = i + 1
+			time.sleep(0.1)
+				
+
+
+def isRegged2(nick, irc, sentline=False):
     """Function to check is user is identified with nickserv.
         true if Nickserv says he's registered."""
     #return True

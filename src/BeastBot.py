@@ -42,7 +42,12 @@ def main():
                 # This is normal
             except Exception as e:
                 errorhandling.inputError('critical', e, line)
-
+                
+        if ("STATUS") in line and ircFunc.getUsername(line).lower() == 'nickserv':
+            if re.search(" 3 " , line):
+                ircFunc.updateReg(line.split(" ")[4].strip(), True)
+            else:
+                ircFunc.updateReg(line.split(" ")[4].strip(), False)
         try:
             # Checks if user is banned from using the bot. If not it proceeds
             username = ircFunc.getUsername(line).lower()
@@ -82,7 +87,7 @@ def main():
                             # Proceed with admin functions
                             if username in conf['botadmins'].lower().split(" "):
                                 # Checks if user is a admin
-                                if ircFunc.isRegged(username, irc):
+                                if ircFunc.isRegged2(username, irc):
                                     # makes sure user is identified with nickserv
                                     if command == 'quit':
                                         errorhandling.inputInfo('Quiting: Command directed by: ' + username)
@@ -200,6 +205,7 @@ if __name__ == "__main__":
     from inc import *
     # Makes sure configuration exists and if not creates it
     configFunc.ensureConf()
+    ircFunc.ensureRegDB()
     # Cleans temp nick and chans
     configFunc.CleanTemps()
     # Sets modules exist to 0
